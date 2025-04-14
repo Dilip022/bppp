@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BharatPay Clone</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: url('aeps-india-bbps-banner2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .form-box {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .form-box img {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      color: #1d4ed8;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      background-color: #f3f4f6;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    form input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1d4ed8;
+      color: #ffffff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #2563eb;
+    }
+
+    #successMsg {
+      color: green;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .tab-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      margin: 0 5px;
+      background-color: #e0e7ff;
+      border: none;
+      border-radius: 8px;
+      color: #1d4ed8;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .tab-buttons button.active {
+      background-color: #1d4ed8;
+      color: white;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <img src="th.jpeg" alt="Bharat Pay Logo" />
+      <h2>Bharat Pay</h2>
+
+      <div class="tab-buttons">
+        <button class="tab-button active" data-tab="bank">Bank Transfer</button>
+        <button class="tab-button" data-tab="upi">UPI Transfer</button>
+      </div>
+
+      <div id="bank" class="form-section active">
+        <div class="info">
+          <p><strong>Account Holder Name:</strong> John Doe</p>
+          <p><strong>Account Number:</strong> 123456789012</p>
+          <p><strong>IFSC Code:</strong> SBIN0123456</p>
+        </div>
+        <form class="paymentForm">
+          <input type="text" placeholder="Transaction ID" required pattern="[a-zA-Z0-9]{6,}" title="Transaction ID must be at least 6 characters long" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+      <div id="upi" class="form-section">
+        <div class="info">
+          <p><strong>Account Holder Name:</strong> John Doe</p>
+          <p><strong>UPI ID:</strong> name@bank</p>
+        </div>
+        <form class="paymentForm">
+          <input type="text" placeholder="Transaction ID" required pattern="[a-zA-Z0-9]{6,}" title="Transaction ID must be at least 6 characters long" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+      <p id="successMsg">✅ Submitted Successfully!</p>
+    </div>
+  </div>
+
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const formSections = document.querySelectorAll(".form-section");
+    const successMsg = document.getElementById("successMsg");
+
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        tabButtons.forEach(btn => btn.classList.remove("active"));
+        formSections.forEach(section => section.classList.remove("active"));
+
+        button.classList.add("active");
+        document.getElementById(button.dataset.tab).classList.add("active");
+
+        successMsg.style.display = "none";
+      });
+    });
+
+    document.querySelectorAll(".paymentForm").forEach(form => {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (form.checkValidity()) {
+          successMsg.style.display = "block";
+          form.reset();
+        } else {
+          successMsg.style.display = "none";
+          form.reportValidity();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
